@@ -3,19 +3,25 @@
 #### **Docker** is a software development platform for virtualization with multiple Operating systems running on the same host. Docker container image is a lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings. Container images become containers at runtime and in the case of Docker containers - images become containers when they run on [Docker Engine](https://www.docker.com/products/container-runtime)
 ## Docker vs Virtual Machine 
 Docker is container based technology and containers are just user space of the operating system. In Docker, the containers running share the host OS kernel.A container is just a set of processes that are isolated from the rest of the system, running from a distinct image that provides all files necessary to support the processes
-Virtual Machine are made up of user space plus kernel space of an operating system. Under VMs, server hardware is virtualized. The hypervisor allows multiple VMs to run on a single machine. Each VM includes a full copy of an operating system, the application, necessary binaries and libraries - taking up tens of GBs **Conclusion** 
+Virtual Machine are made up of user space plus kernel space of an operating system. Under VMs, server hardware is virtualized. The hypervisor allows multiple VMs to run on a single machine. Each VM includes a full copy of an operating system, the application, necessary binaries and libraries - taking up tens of GBs 
+
+**Conclusion** 
+
 1. Docker Containers occupy less space than VMs
 2. Containers have a better performance than VMs
 3. Docker easy to scale up 
 4. High efficiency 
 5. Easily portable across different platforms
 6. Data volumes can be shared and reused among multiple containers
+
+
 ## Why we need Docker?
 1. Docker helps to package and ship , run apllication more easily in everywhere. 
 2. Microservices : 
 	* Immutable: behavior in local same   other environment 
 	* Lightweight: Fast create containers 
 	* Stateless: disposable and ephemeral 
+
 ## Docker : The components parts
 
 **Docker Engine**  is the core of Docker. It is the underlying client-server technology that creates and runs the containers. The Docker Engine includes a long-running daemon process called dockerd for managing containers, APIs that allow programs to communicate with the Docker daemon, and a command-line interface.Users use Docker-client (CLI) to communicate to Docker deamon by HTTPS protocol
@@ -29,7 +35,9 @@ Virtual Machine are made up of user space plus kernel space of an operating syst
 **Docker Containers.** are the organizational units and one of the Docker basics concept. When we build an image and start running it; we are running in a container. The container analogy is used because of the portability of the software we have running in our container
 
 **Docker registry** Docker stores the images we build in registries. There are public and private registries. Docker company has public registry called [Docker hub](https://hub.docker.com/), where you can also store images privately
+
 **Docker Volume.** Volume indicates the partition of memory that Docker uses to persist data inside container
+
 # Get Started with Docker
 ### **I. Download and install Docker at: [docker](https://docs.docker.com/engine/install/)**
 ### **II.  How to use Docker using basic Docker CLI**
@@ -60,6 +68,7 @@ As we can see in the above Docker example, we have information about docker cont
 $ sudo docker pull alpine
 ```
 With this command we are telling docker to download the image alpine, to pull it from the public registry, the latest version which is set by default.
+
 *alpine is a minimal Docker image based on Alpine Linux with a complete package index and only 5 MB in size.
 If we want to run the image as a container, we will use the following command in this Docker tutorials guide.
 
@@ -77,6 +86,7 @@ You can notice docker checks for the image locally, and if it’s not there, the
 $ sudo docker run –-name our_container -it ubuntu /bin/bash
 ```
 and we exit again.
+
 We can also run container we previously created, without an interactive shell
 ```
 $ sudo docker start container_name
@@ -92,6 +102,7 @@ $ docker ps
 And for all containers we add “- a”at the end of this same command, like this docker ps -a.
 
 This command shows Container’s ID, which image is using when was created, running status, exposed ports and randomly generated name for the container for easier management.
+
 ```
 $ docker ps -a
 ```
@@ -101,27 +112,31 @@ $ sudo docker images
 ```
 The command in the above Docker example displays the docker image with a tag which shows our image version, a distinctive image ID, when was created and image size
 
-We can use attach - detach mode : detach container form local terminal :
+We can use attach - detach mode : detach container form local terminal:
 ```
 $ sudo docker attach <container_id> 
 ```
 to re-attach container stdin and stdout into clocal terminal
  
  Run a container in detach mode 
+
  ```
  $ sudo docker run -d <image>
  ```
  **Exucute commands insides container**
+
  Syntax: 
  ```
  $ sudo docker exec <container_id> <command>
 ```
 **Port mapping**
 Syntax 
+
 ```
 $ docker run -p <target_port>:<container_port> ...
 ```
 Example:
+
 ```
 $ docker run -p 80:80 <docker_image> 
 ```
@@ -129,12 +144,13 @@ $ docker run -p 80:80 <docker_image>
 ```
 $ docker logs -f <container_id>
 ```
-** Volume - bind mount**
+**Volume - bind mount**
 ```
 docker volume create [volume_name]
 docker run -v [local_dir/volume]:[container_dir] ...
 ```
 Example
+
 ```
 docker volume create pgdata
 docker run -v pgdata:/var/lib/postgresql/data -p 5432:5432 postgres
@@ -144,9 +160,11 @@ docker run -v pgdata:/var/lib/postgresql/data -p 5432:5432 postgres
 ***Build process docker image from Dockerfile***
 With each command, when sending build context to Docker Daemon , Docker will create a temporary container from previous layer, then execute command step by step inside that container, take a snapshot of it into a new layer and finally remove the temporary container which is no longer needed
 **1. Dockerfile**
+
 Format: 
 ```dockerfile
 INSTRUCTION arguments
+
 FROM ...
 
 RUN <command>(the command is run in a shell, which by default is /bin/sh -c  on Linux or cmd /S /C on Windows)
@@ -182,8 +200,11 @@ WORKDIR /path/to/workdir
 **f. COPY.** The `COPY` instruction copies new files or directories from `<src>` and adds them to the filesystem of the container at the path `<dest>`.
 
 **g. WORKDIR.** The `WORKDIR` instruction sets the working directory for any `RUN`, `CMD`, `ENTRYPOINT`, `COPY` and `ADD` instructions that follow it in the `Dockerfile`. If the `WORKDIR` doesn’t exist, it will be created even if it’s not used in any subsequent `Dockerfile` instruction.
+
 Example: 
+
 ```dockerfile
+
 FROM golang:alpine
 WORKDIR /app
 COPY . . 
@@ -194,10 +215,13 @@ CMD  ["./main","serve"]
 
 
 **Create image**
+
 Syntax:
+
 ```
 docker build -t <images_name>:tag .
 ```
+
 **Build context  -  .dockerignore**
 
 "Build context" refers to the folder that contains Dockerfile. All contents insides that folder is call build context
@@ -210,7 +234,6 @@ docker build -t <images_name>:tag .
 
 Compose is a tool for defining and running multi-container Docker applications. With Compose, you use a YAML file to configure your application’s services. Then, with a single command, you create and start all the services from your configuration
 
-  
 
 Compose works in all environments: production, staging, development, testing, as well as CI workflows
 
@@ -248,6 +271,7 @@ from the command line.
 The Compose file is a [YAML](http://yaml.org/) file defining [version](https://github.com/compose-spec/compose-spec/blob/master/spec.md#version-top-level-element) (DEPRECATED), [services](https://github.com/compose-spec/compose-spec/blob/master/spec.md#services-top-level-element) (REQUIRED), [networks](https://github.com/compose-spec/compose-spec/blob/master/spec.md#networks-top-level-element), [volumes](https://github.com/compose-spec/compose-spec/blob/master/spec.md#volumes-top-level-element), [configs](https://github.com/compose-spec/compose-spec/blob/master/spec.md#configs-top-level-element) and [secrets](https://github.com/compose-spec/compose-spec/blob/master/spec.md#secrets-top-level-element)
 
 A `docker-compose.yml` looks like this:
+
 ```yaml
 version: "3.4"
 
@@ -309,13 +333,16 @@ Syntax
 ```
 docker-compose build <service_name>
 ```
+
 Example
 ```
 docker-compose build app
 ```
 ***3. Run container with docker-compose***
 
+
 Syntax
+
 ```
 docker-compose up
 docker-compose up <service_name>
@@ -326,6 +353,7 @@ docker-compose down <service_name>
 ```
 
 # **Commonly used command in Docker**
+
 1. Docker containers
 ```
     docker ps
