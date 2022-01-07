@@ -3,6 +3,7 @@
 #### **Docker** is a software development platform for virtualization with multiple Operating systems running on the same host. Docker container image is a lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings. Container images become containers at runtime and in the case of Docker containers - images become containers when they run on [Docker Engine](https://www.docker.com/products/container-runtime)
 ## Docker vs Virtual Machine 
 Docker is container based technology and containers are just user space of the operating system. In Docker, the containers running share the host OS kernel.A container is just a set of processes that are isolated from the rest of the system, running from a distinct image that provides all files necessary to support the processes
+
 Virtual Machine are made up of user space plus kernel space of an operating system. Under VMs, server hardware is virtualized. The hypervisor allows multiple VMs to run on a single machine. Each VM includes a full copy of an operating system, the application, necessary binaries and libraries - taking up tens of GBs 
 
 **Conclusion** 
