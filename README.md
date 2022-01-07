@@ -160,6 +160,7 @@ docker run -v pgdata:/var/lib/postgresql/data -p 5432:5432 postgres
 ### **III.  How to build Docker image**
 ***Build process docker image from Dockerfile***
 With each command, when sending build context to Docker Daemon , Docker will create a temporary container from previous layer, then execute command step by step inside that container, take a snapshot of it into a new layer and finally remove the temporary container which is no longer needed
+
 **1. Dockerfile**
 
 Format: 
